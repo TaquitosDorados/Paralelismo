@@ -1,0 +1,1 @@
+Examen de primer parcial de la clase de Paralelismo
