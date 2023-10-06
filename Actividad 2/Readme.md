@@ -1,0 +1,1 @@
+Programa para leer imagenes y separar sus canales RGB
