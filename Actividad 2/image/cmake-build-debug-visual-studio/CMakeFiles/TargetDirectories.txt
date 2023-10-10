@@ -1,0 +1,3 @@
+D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/cmake-build-debug-visual-studio/CMakeFiles/image.dir
+D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/cmake-build-debug-visual-studio/CMakeFiles/edit_cache.dir
+D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/cmake-build-debug-visual-studio/CMakeFiles/rebuild_cache.dir

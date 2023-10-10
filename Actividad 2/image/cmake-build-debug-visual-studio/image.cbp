@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="image"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="msvc8"/>
+		<Option virtualFolders="CMake Files\;CMake Files\Users\;CMake Files\Users\xxdar\;CMake Files\Users\xxdar\.vcpkg-clion\;CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\;CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\scripts\;CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\scripts\buildsystems\;CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\;CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\;CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\;CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\opencv\;CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\protobuf\;CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\tiff\;CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\quirc\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/cmake-build-debug-visual-studio"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="image">
+				<Option output="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/cmake-build-debug-visual-studio/image.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/cmake-build-debug-visual-studio"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/include"/>
+					<Add directory="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933\include"/>
+					<Add directory="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933\ATLMFC\include"/>
+					<Add directory="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\VS\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 image"/>
+					<CompileFile command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="image/fast">
+				<Option output="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/cmake-build-debug-visual-studio/image.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/cmake-build-debug-visual-studio"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/include"/>
+					<Add directory="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933\include"/>
+					<Add directory="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933\ATLMFC\include"/>
+					<Add directory="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\VS\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 image/fast"/>
+					<CompileFile command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/cmake-build-debug-visual-studio"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 edit_cache"/>
+					<CompileFile command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/cmake-build-debug-visual-studio"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f &quot;D:\Paralelismo\Programacion_Paralela_PARG\Actividad 2\image\cmake-build-debug-visual-studio\Makefile&quot; VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/main.cpp">
+			<Option target="image"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\scripts\buildsystems\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/opencv/OpenCVConfig-version.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\opencv\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/opencv/OpenCVConfig.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\opencv\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/opencv/OpenCVModules-debug.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\opencv\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/opencv/OpenCVModules-release.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\opencv\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/opencv/OpenCVModules.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\opencv\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/protobuf/protobuf-config-version.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\protobuf\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/protobuf/protobuf-config.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\protobuf\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/protobuf/protobuf-module.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\protobuf\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/protobuf/protobuf-options.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\protobuf\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/protobuf/protobuf-targets-debug.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\protobuf\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/protobuf/protobuf-targets-release.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\protobuf\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/protobuf/protobuf-targets.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\protobuf\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/protobuf/vcpkg-cmake-wrapper.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\protobuf\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/tiff/vcpkg-cmake-wrapper.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\tiff\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/quirc/quirc-config-debug.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\quirc\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/quirc/quirc-config-release.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\quirc\"/>
+		</Unit>
+		<Unit filename="D:/Paralelismo/Programacion_Paralela_PARG/Actividad 2/image/Users/xxdar/.vcpkg-clion/vcpkg/installed/x64-windows/share/quirc/quirc-config.cmake">
+			<Option virtualFolder="CMake Files\Users\xxdar\.vcpkg-clion\vcpkg\installed\x64-windows\share\quirc\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
