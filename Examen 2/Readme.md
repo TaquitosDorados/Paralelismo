@@ -38,6 +38,24 @@ Ambas funciones de `warmup(innerStruct*, innerStruct*, int)` y `testInnerStruct(
 
 En el caso de los procesos del procesador, la asignación de memoria fue la que tomó la mayoría del tiempo, un 88% (566.38 ms), de ahí los procesos a destacar son `cudaDeviceReset` (Limpiar los procesos de la GPU) con 35.7 ms y `cudaMemcpy` (Intercambio de datos con la GPU) con 31.2ms; de ahí los demás procesos van decayendo en tiempo significante del proceso total.
 
+```
+__global__ void testInnerStruct(innerStruct *data, innerStruct * result,
+                                const int n)
+{
+    unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if (i < n)
+    {
+        innerStruct tmp = data[i];
+        tmp.x += 10.f;
+        tmp.y += 20.f;
+        result[i] = tmp;
+    }
+}
+```
+
+Esta funcion que es llamada en la GPU tiene la tarea de sumar los valores X y Y, de valor 10 y 20 respectivamente, en cada estructura dentro del arreglo. Cada hilo se encarga de hacer los calculos para cada estructura dentro del arreglo, tomando como valor temporal la estructura, para a esta variable temporal sumarle ambos a X y Y, pera posteriormente darle el valor a la estructura de la misma posicion los nuevos valores al igualarla a esta variable temporal. 
+
 ## SimpleMathSOA
 
 ```
@@ -73,6 +91,27 @@ Este ejemplo es muy similar al anterior, solo que en lugar de usar Arrays de Est
 El impacto en ambos dispositivos tienen una significativa diferencia con el ejemplo anterior. Parece ser que en este caso ha sido un proceso más rápido. En la GPU llegó a tener un proceso de transferencia de datos con el procesador con un tiempo recortado por casi la mitad, por ejemplo, `[CUDA memcpy DtoH]` con 12.215ms comparado con los 23.304ms del código anterior.
 
 En el caso del procesador, no parece haber mucho cambio, exceptuando lo que podíamos imaginar con el `cudaMemcpy`, un tiempo más corto en transferir los datos ya que la GPU tardó alrededor de la mitad en terminar su trabajo.
+
+```
+__global__ void testInnerArray(InnerArray *data, InnerArray * result,
+                               const int n)
+{
+    unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if (i < n)
+    {
+        float tmpx = data->x[i];
+        float tmpy = data->y[i];
+
+        tmpx += 10.f;
+        tmpy += 20.f;
+        result->x[i] = tmpx;
+        result->y[i] = tmpy;
+    }
+}
+```
+
+Esta funcion hace la misma tarea que en el código anterior, solo que en este caso, calculandole los datos al arreglo, que es parte de una estructura de estos mismos arreglos. En este caso en lugar de crear una sola variable temporal, se tienen que hacer dos, uno por cada variable a que se le hará el calculo, ya que ya no solo son un valor X y Y, sino que son un arreglo entonces tienen que tener especificamente la direccion a la variable a la cual quieren calcularle la suma.
 
 ## sumArrayZerocpy
 
@@ -111,6 +150,49 @@ Lo primero a notar es que los procesos dentro de la GPU tomaron un tiempo extrem
 
 Como era de esperarse, en el procesador la tarea más pesada fue la de la asignación de memoria, de ahí los procesos no son significantes, nisiquiera los `cudaMemcpy`, que en los demás códigos por lo general es de los más tardados, ni `cuDeviceGetPCIBusId`, que es quien devuelve los valores de lo que fue procesado en la GPU.
 
+```
+__global__ void sumArrays(float *A, float *B, float *C, const int N)
+{
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if (i < N) C[i] = A[i] + B[i];
+}
+
+__global__ void sumArraysZeroCopy(float *A, float *B, float *C, const int N)
+{
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if (i < N) C[i] = A[i] + B[i];
+}
+```
+
+Estas dos funciones que son llamadas en la GPU a ejecutarse, parecen ser y hacer exactamente lo mismo, y en realidad es cierto. La diferencia viene en que en el primero los datos son copiados a la GPU para despues copiarlos de vuelta al procesador con el resultado. En el segundo caso no usa el Memcpy, sino que almacena la direccion de los valores para directamente cambiarlos sin necesidad de copiar nada:
+
+```
+...
+    // part 2: using zerocopy memory for array A and B
+    // allocate zerocpy memory
+    CHECK(cudaHostAlloc((void **)&h_A, nBytes, cudaHostAllocMapped));
+    CHECK(cudaHostAlloc((void **)&h_B, nBytes, cudaHostAllocMapped));
+
+    // initialize data at host side
+    initialData(h_A, nElem);
+    initialData(h_B, nElem);
+    memset(hostRef, 0, nBytes);
+    memset(gpuRef,  0, nBytes);
+
+    // pass the pointer to device
+    CHECK(cudaHostGetDevicePointer((void **)&d_A, (void *)h_A, 0));
+    CHECK(cudaHostGetDevicePointer((void **)&d_B, (void *)h_B, 0));
+
+    // add at host side for result checks
+    sumArraysOnHost(h_A, h_B, hostRef, nElem);
+
+    // execute kernel with zero copy memory
+    sumArraysZeroCopy<<<grid, block>>>(d_A, d_B, d_C, nElem);
+...
+```
+
 ## sumMatrixGPUManaged
 
 ```
@@ -142,6 +224,24 @@ En este código se tiene un control total de las direcciones de memoria con las 
 El único proceso necesario dentro de la GPU es el de `sumMatrixGPU(float*, float*, float*, int, int)`, donde se hacen los calculos de la Matriz.
 
 El proceso de asignación de memoria en el procesador fue varias veces más tardado que en el de los últimos códigos, con 815.38ms cuando antes rondaba entre los 200 ms, esto se esperaba ya que la asignación era más específica, pero sacrificando esto, hace que el proceso dentro de la GPU sea más sencilla y corta.
+
+```
+// grid 2D block 2D
+__global__ void sumMatrixGPU(float *MatA, float *MatB, float *MatC, int nx,
+                             int ny)
+{
+    unsigned int ix = threadIdx.x + blockIdx.x * blockDim.x;
+    unsigned int iy = threadIdx.y + blockIdx.y * blockDim.y;
+    unsigned int idx = iy * nx + ix;
+
+    if (ix < nx && iy < ny)
+    {
+        MatC[idx] = MatA[idx] + MatB[idx];
+    }
+}
+```
+
+Esta funcion ejecutada en la GPU tiene como tarea sumar dos Matrices. Esto lo hace utilizando un par de hilos, cada uno conteniendo el valor de un dato de ambas Matrices para despues sumarlas. En este código se utiliza la asignacion de memora de manera administrada, por lo que no se necesita hacer las copias entre el device y el host, porque se tiene la direccion de memoria en donde todo se va a calcular.
 
 ## sumMatrixGPUManual
 
@@ -180,6 +280,24 @@ Hay una enorme diferencia al ser comparada con los tiempos del código anterior.
 
 En el caso del procesador, el tiempo de ejecución disminuyó considerablemente, pero a coste de un proceso en la GPU más lento. De esta forma podemos pensar en ambas formas de llevar a cabo estos procesos de transferencia de memoria, y elegir la que más nos convenga, procurando tener siempre un balance entre los procesos que hace la GPU y el procesador.
 
+```
+// grid 2D block 2D
+__global__ void sumMatrixGPU(float *MatA, float *MatB, float *MatC, int nx,
+                             int ny)
+{
+    unsigned int ix = threadIdx.x + blockIdx.x * blockDim.x;
+    unsigned int iy = threadIdx.y + blockIdx.y * blockDim.y;
+    unsigned int idx = iy * nx + ix;
+
+    if (ix < nx && iy < ny)
+    {
+        MatC[idx] = MatA[idx] + MatB[idx];
+    }
+}
+```
+
+Esta funcion es exactamente a la misma que la anterior, usa ambos hilos para sumar cada valor dentro de la matriz, en este ejemplo, el código en su lugar utiliza el método normal de CUDA, el cual es copiar los valores del procesador a la GPU para luego regresarsela de la misma manera con los calculos hechos.
+
 ## transpose
 
 ```
@@ -215,6 +333,21 @@ En este caso no hay realmente nada nuevo que ver. En la GPU tenemos lo que conoc
 
 En el procesador, la asignación de memoria y la transferencia de datos entre dispositivos fueron las más destacables.
 
+```
+// case 0 copy kernel: access data in rows
+__global__ void copyRow(float *out, float *in, const int nx, const int ny)
+{
+    unsigned int ix = blockDim.x * blockIdx.x + threadIdx.x;
+    unsigned int iy = blockDim.y * blockIdx.y + threadIdx.y;
+
+    if (ix < nx && iy < ny)
+    {
+        out[iy * nx + ix] = in[iy * nx + ix];
+    }
+}
+```
+
+La tarea de esta funcion ejecutada en la GPU es de copiar la fila para luego transponerla hacia otra matriz, convirtiendola en una columna.
 ## writeSegment
 
 ```
@@ -250,6 +383,47 @@ En el procesador, la asignación de memoria y la transferencia de datos entre di
 Este código muestra el impacto que tiene las escrituras no alineadas, llamando varias veces al kernel, trasfiriendo y regresando datos una y otra vez.
 
 Lo único que podemos notar es el aumento de veces que se tuvo que hacer la transferencia de datos, cosa que en el rendimiento impactó un poco en los tiempos de ejecución pero no fue la gran cosa. Supongo que mientras mas llames a hacer estas transferencias de memoria, más tardará.
+
+```
+__global__ void writeOffset(float *A, float *B, float *C, const int n,
+                            int offset)
+{
+    unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
+    unsigned int k = i + offset;
+
+    if (k < n) C[k] = A[i] + B[i];
+}
+
+__global__ void writeOffsetUnroll2(float *A, float *B, float *C, const int n,
+                                   int offset)
+{
+    unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
+    unsigned int k = i + offset;
+
+    if (k + blockDim.x < n)
+    {
+        C[k]            = A[i]            + B[i];
+        C[k + blockDim.x] = A[i + blockDim.x] + B[i + blockDim.x];
+    }
+}
+
+__global__ void writeOffsetUnroll4(float *A, float *B, float *C, const int n,
+                                   int offset)
+{
+    unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
+    unsigned int k = i + offset;
+
+    if (k + 3 * blockDim.x < n)
+    {
+        C[k]              = A[i]              + B[i];
+        C[k + blockDim.x]   = A[i +  blockDim.x] + B[i +  blockDim.x];
+        C[k + 2 * blockDim.x] = A[i + 2 * blockDim.x] + B[i + 2 * blockDim.x];
+        C[k + 3 * blockDim.x] = A[i + 3 * blockDim.x] + B[i + 3 * blockDim.x];
+    }
+}
+```
+
+Estos tres códigos en escencia hacen exactamente lo mismo, que es escribir o dar valor una variable a partir de otras, sin embargo, en el primero se hace con un offset para cada operacion, haciendolo mas lento, despues se utiliza el unroll, que hace esto más efectivo porque en un solo hilo se hacen x numero de calculos al mismo tiempo para valores ademas del que va en el intervalo.
 
 ## memTransfer
 
@@ -345,6 +519,18 @@ Este código funciona de forma similar a la que era para hacer escrituras, en es
 
 No hay mucho que explicar mas que el hecho de que estén mal alineadas hace que el proceso sea un poco más lento.
 
+```
+__global__ void readOffset(float *A, float *B, float *C, const int n,
+                           int offset)
+{
+    unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
+    unsigned int k = i + offset;
+
+    if (k < n) C[i] = A[k] + B[k];
+}
+```
+Esta funcion que se ejecuta en la GPU es para leer los datos de los arreglos pero con un offset, haciendo que esto sea un proceso mas lento porque se hace un calculo extra;
+
 ## readSegmentUnroll
 
 ```
@@ -383,3 +569,36 @@ Este código tiene la misma funcionalidad que la anterior, pero le agrega unos p
 
 A pesar de que el punto de este código sea un mejor rendimiento, viendo los resultados, vemos que hizo todo lo contrario. Aumentó enormemente el tiempo de ejecución dentro de la GPU. En el procesador no parece que haya bajado el tiempo de ejecución sumando todos los tiempos de cada proceso. Quizás este código funcione de manera más optima para procesos más grandes.
 
+```
+__global__ void readOffsetUnroll2(float *A, float *B, float *C, const int n,
+                                  int offset)
+{
+    unsigned int i = blockIdx.x * blockDim.x * 2 + threadIdx.x;
+    unsigned int k = i + offset;
+
+    if (k < n) C[i] = A[k] + B[k];
+    if (k + blockDim.x < n) {
+        C[i + blockDim.x] = A[k + blockDim.x] + B[k + blockDim.x];
+    }
+}
+
+__global__ void readOffsetUnroll4(float *A, float *B, float *C, const int n,
+                                  int offset)
+{
+    unsigned int i = blockIdx.x * blockDim.x * 4 + threadIdx.x;
+    unsigned int k = i + offset;
+
+    if (k < n) C[i] = A[k]                  + B[k];
+    if (k + blockDim.x < n) {
+        C[i + blockDim.x]     = A[k + blockDim.x]     + B[k + blockDim.x];
+    }
+    if (k + 2 * blockDim.x < n) {
+        C[i + 2 * blockDim.x] = A[k + 2 * blockDim.x] + B[k + 2 * blockDim.x];
+    }
+    if (k + 3 * blockDim.x < n) {
+        C[i + 3 * blockDim.x] = A[k + 3 * blockDim.x] + B[k + 3 * blockDim.x];
+    }
+}
+```
+
+Este es un caso igual que en el que WriteSegment, en este codigo solo leyendolos, utiliza el método de Unroll para que, aunque no esten alineados, sea más rapido ya que calcula más datos en las anteriores posiciones tambien
