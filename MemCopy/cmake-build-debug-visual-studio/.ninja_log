@@ -1,0 +1,22 @@
+# ninja log v5
+2	4987	7218986649987062	CMakeFiles/MemCopy.dir/main.cu.obj	336fc0a3e8e0b167
+4988	8024	7218986680497639	CMakeFiles/MemCopy.dir/cmake_device_link.obj	2987bcd1b78cba6b
+8025	8256	7218986682337539	MemCopy.exe	f01367cc4d93c427
+2	5976	7218995148200811	CMakeFiles/MemCopy.dir/main.cu.obj	336fc0a3e8e0b167
+5977	9255	7218995181079759	CMakeFiles/MemCopy.dir/cmake_device_link.obj	2987bcd1b78cba6b
+9255	9562	7218995183519777	MemCopy.exe	f01367cc4d93c427
+3	6186	7218995992477261	CMakeFiles/MemCopy.dir/main.cu.obj	336fc0a3e8e0b167
+6187	9531	7218996026150694	CMakeFiles/MemCopy.dir/cmake_device_link.obj	2987bcd1b78cba6b
+9531	9786	7218996028040700	MemCopy.exe	f01367cc4d93c427
+3	6103	7218996183897883	CMakeFiles/MemCopy.dir/main.cu.obj	336fc0a3e8e0b167
+6104	9574	7218996218736006	CMakeFiles/MemCopy.dir/cmake_device_link.obj	2987bcd1b78cba6b
+9574	9865	7218996220976089	MemCopy.exe	f01367cc4d93c427
+2	7132	7218996690214118	CMakeFiles/MemCopy.dir/main.cu.obj	336fc0a3e8e0b167
+7133	10515	7218996724137844	CMakeFiles/MemCopy.dir/cmake_device_link.obj	2987bcd1b78cba6b
+10515	10836	7218996726737900	MemCopy.exe	f01367cc4d93c427
+2	5243	7218997949312004	CMakeFiles/MemCopy.dir/main.cu.obj	336fc0a3e8e0b167
+5244	8306	7218997980062411	CMakeFiles/MemCopy.dir/cmake_device_link.obj	2987bcd1b78cba6b
+8306	8523	7218997981892381	MemCopy.exe	f01367cc4d93c427
+2	4812	7218999056832310	CMakeFiles/MemCopy.dir/main.cu.obj	336fc0a3e8e0b167
+4813	7843	7218999087398896	CMakeFiles/MemCopy.dir/cmake_device_link.obj	2987bcd1b78cba6b
+7844	8058	7218999089197021	MemCopy.exe	f01367cc4d93c427

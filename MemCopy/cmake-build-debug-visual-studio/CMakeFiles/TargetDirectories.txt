@@ -1,0 +1,3 @@
+C:/Users/xxdar/Documents/Programacion_Paralela_PARG/MemCopy/cmake-build-debug-visual-studio/CMakeFiles/MemCopy.dir
+C:/Users/xxdar/Documents/Programacion_Paralela_PARG/MemCopy/cmake-build-debug-visual-studio/CMakeFiles/edit_cache.dir
+C:/Users/xxdar/Documents/Programacion_Paralela_PARG/MemCopy/cmake-build-debug-visual-studio/CMakeFiles/rebuild_cache.dir
