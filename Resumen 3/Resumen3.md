@@ -18,7 +18,7 @@ Puedes acceder esta puedes usar bloques de hilos 2D:
 
 Es mejor tener hilos con valores consecutivos de `threadIdx.x` accesando en ubicaciones consecutivas de la memoria compartida
 
-## Accediendo a la Fila Mayor contra la Columna Mayor
+### Accediendo a la Fila Mayor contra la Columna Mayor
 
 Necesitamos un código que haga lo siguiente:
 
@@ -59,7 +59,7 @@ __global__ void setColReadCol(int *out) {
 }
 ```
 
-## Escribiendo Fila Mayor y leyendo Columna Mayor
+### Escribiendo Fila Mayor y leyendo Columna Mayor
 
 El siguiente código escribe a la memoria compartida en orden de Fila Mayor como en el anterior ejemplo.
 Se implementa la asignación de valores a la memoria global desde la memoria compartida en un orden de Columna Mayor, cambiando de lugar los dos incides de los hilos al referenciar la memoria compartida: `out[idx] = tile[threadIdx.x][threadIdx.y];`
@@ -83,7 +83,7 @@ __global__ void setRowReadCol(int *out) {
 
 En este caso la operacion de guardado no presenta conflictos pero al cargarlo presenta 16.
 
-## Memoria Compartida Dinámica
+### Memoria Compartida Dinámica
 
 Se puede usar estos mismos kernels declarando una memoria compartida dinámica.
 Esta tiene que ser declarada como un arreglo unidimensional sin tamaño.
@@ -114,4 +114,35 @@ El tamaño de la memoria compartida debe ser especificada cuando se lanza el ker
 
 Este ejemplo sigue teniendo los 16 conflictos que en el código anterior.
 
-## Agregando Padding a la memoria compartida declarada de manera estática
+//A partir de esta linea, me quede sin luz y tuve que trabajar desde la chamba xd
+
+### Agregando Padding a la memoria compartida declarada de manera estática
+
+Aplicando padding al arreglo de la memoria compartida es la unica forma de evitar conflictos con el banco de memoria.
+Para este caso es sencillo, es simplemente agregar una columna extra al arreglo: `__shared__ int tile[BDIMY][BDIMX=1];`
+
+En el codigo anterior, sabemos que existen 16 conflictos. Al aplicar padding a un elemento casa fila, los elementos de las columnas estan en diferentes bancos de memoria, eliminando estos conflictos.
+
+### Agregando Padding a la memoria compartida declarada de manera dinamica
+
+Aplicar padding en un arreglo dinamico es mas complicado. Se tiene que saltar un espacio por cada fila al aplicar la conversion de indices: 
+
+```
+    unsigned int row_idx = threadIdx.y * (blockDim.x + 1) + threadIdx.x;
+    unsigned int col_idx = threadIdx.x * (blockDim.x + 1) + threadIdx.y;
+```
+
+Ya que la memoria global que se usa para guardar datos en el kernel es mas pequenio que la memoria compartida que se le aplico padding, se necesitan tres indices: uno para la escritura de fila mayor a la memoria compartida, otro para lecturas de columna mayor desde la memoria mayor, y una ultima para accesos fucionados de la memoria global sin padding.
+
+## Memoria Compartida Rectangular
+
+Este se define como un arreglo en donde las filas y columnas no tienen el mismo tamanio.
+
+No se puede simplememente cambiar de lugar las coordenadas de hilos al hacer una operacion de transposicion ya que viola el acceso a la memoria.
+
+Funciona de la misma manera que la rectangular pero hay que poner atencion a los tamanios, dando indices independientes para cada columna y fila:
+
+```
+    unsigned int irow = idx / blockDim.y;
+    unsigned int icol = idx % blockDim.y;
+```
